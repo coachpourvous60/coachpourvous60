@@ -1,4 +1,5 @@
-name: Deploy static site to Pages
+.github/workflows/pages.yml
+
 on:
   push:
     branches: ["main"]
