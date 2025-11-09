@@ -1,2 +1,3 @@
 User-agent: *
 Allow: /
+Sitemap: https://coachpourvous60.github.io/coachpourvous60/sitemap.xml
