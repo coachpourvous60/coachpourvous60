@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="description" content="Obtenez votre devis personnalisé pour des cours de sport à Clermont-de-l'Oise en 24h. 50€/h, déplacements offerts dans 30km. Formulaire rapide et sécurisé.">
+  <title>Devis Express Coach Sportif | Réponse en 24h | CoachPourVous 60</title>
+  
+  <!-- OPEN GRAPH -->
+  <meta property="og:title" content="Devis Express - CoachPourVous">
+  <meta property="og:description" content="Obtenez votre devis personnalisé en 24h. Coach sportif à Clermont-de-l'Oise">
+  <meta property="og:image" content="https://votredomaine.com/images/coach-portrait.jpg">
+  
+  <!-- FAVICON -->
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    input, select, textarea { font-size: 16px !important; }
+    body { -webkit-text-size-adjust: 100%; font-family: 'Montserrat', sans-serif; }
+    .mobile-safe { width: 100%; max-width: 100vw; overflow-x: hidden; }
+    .text-gradient { background: linear-gradient(45deg, #FF6B35, #FFD23F); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  </style>
+</head>
+<body class="bg-gray-50 font-sans">
+
+<!-- Navigation bottom -->
+<nav class="fixed bottom-0 left-0 right-0 bg-white shadow-lg z-50 border-t-2 border-orange-200" role="navigation" aria-label="Navigation principale">
+    <div class="flex justify-around items-center py-2">
+        <a href="index.html" class="flex flex-col items-center p-2 text-gray-500 hover:text-orange-500 transition-colors"><i class="fas fa-home text-xl mb-1"></i><span class="text-xs font-medium">Accueil</span></a>
+        <a href="about.html" class="flex flex-col items-center p-2 text-gray-500 hover:text-orange-500 transition-colors"><i class="fas fa-user text-xl mb-1"></i><span class="text-xs font-medium">Profil</span></a>
+        <a href="services-images.html" class="flex flex-col items-center p-2 text-gray-500 hover:text-orange-500 transition-colors"><i class="fas fa-dumbbell text-xl mb-1"></i><span class="text-xs font-medium">Activités</span></a>
+        <a href="contact.html" class="flex flex-col items-center p-2 text-gray-500 hover:text-orange-500 transition-colors"><i class="fas fa-phone text-xl mb-1"></i><span class="text-xs font-medium">Contact</span></a>
+    </div>
+</nav>
+
+<!-- Top bar de secours -->
+<div class="bg-white shadow p-4">
+    <div class="max-w-6xl mx-auto flex justify-between items-center">
+        <a href="index.html" class="font-bold text-orange-500 text-xl">Coach Pour Vous</a>
+        <a href="contact.html" class="text-gray-600 hover:text-orange-500">Retour au contact</a>
+    </div>
+</div>
+
+<section class="py-16 px-4 pb-24">
+    <div class="max-w-3xl mx-auto bg-white shadow rounded-2xl p-8">
+        <h1 class="text-3xl font-bold mb-6 text-gray-800 text-center">Devis Express</h1>
+        <p class="text-gray-600 mb-8 text-center">Remplissez ce formulaire pour recevoir votre devis personnalisé rapidement.</p>
+
+        <form action="mailto:coachpourvous60@yahoo.com" method="post" enctype="text/plain" class="space-y-6" id="devisForm">
+            <div>
+                <label for="name" class="block font-semibold mb-2">Nom et Prénom *</label>
+                <input type="text" id="name" name="Nom" required class="w-full border border-gray-300 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-orange-400" aria-required="true">
+            </div>
+
+            <div>
+                <label for="email" class="block font-semibold mb-2">Email *</label>
+                <input type="email" id="email" name="Email" required class="w-full border border-gray-300 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-orange-400" aria-required="true">
+            </div>
+
+            <div>
+                <label for="phone" class="block font-semibold mb-2">Téléphone *</label>
+                <input type="tel" id="phone" name="Téléphone" required class="w-full border border-gray-300 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-orange-400" aria-required="true">
+            </div>
+
+            <div>
+                <label for="service" class="block font-semibold mb-2">Service souhaité *</label>
+                <select id="service" name="Service" required class="w-full border border-gray-300 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-orange-400" aria-required="true">
+                    <option value="">Sélectionnez un service</option>
+                    <option value="Cours à domicile">Cours à domicile</option>
+                    <option value="Cours en extérieur">Cours en extérieur</option>
+                    <option value="Coaching personnalisé">Coaching personnalisé</option>
+                    <option value="Autre">Autre</option>
+                </select>
+            </div>
+
+            <div>
+                <label for="message" class="block font-semibold mb-2">Message / détails</label>
+                <textarea id="message" name="Message" rows="4" class="w-full border border-gray-300 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-orange-400" placeholder="Ex : nombre de séances, jours préférés, pack choisi..."></textarea>
+            </div>
+
+            <button type="submit" class="w-full bg-gradient-to-r from-green-500 to-emerald-500 text-white py-4 rounded-2xl font-bold hover:shadow-lg transform hover:scale-105 transition-all duration-300">
+                <i class="fas fa-paper-plane mr-2"></i>Envoyer mon devis
+            </button>
+        </form>
+
+        <p class="text-gray-500 mt-6 text-sm text-center">
+            Vous recevrez votre devis par email sous 24h.
+        </p>
+        
+        <div id="confirmationMessage" class="hidden mt-4 p-4 bg-green-100 text-green-700 rounded-xl text-center font-semibold">
+            <i class="fas fa-check-circle mr-2"></i>Formulaire prêt à envoyer ! Ouvrez votre client email pour finaliser l'envoi.
+        </div>
+    </div>
+</section>
+
+<!-- Espace pour la navigation bottom -->
+<div class="h-20"></div>
+
+<script>
+    // Pré-remplissage du pack choisi depuis l'URL
+    document.addEventListener('DOMContentLoaded', function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const pack = urlParams.get('pack');
+        const messageField = document.getElementById('message');
+        
+        if (pack) {
+            messageField.value = `Je suis intéressé(e) par le pack : ${pack}\n\n` + messageField.value;
+        }
+
+        // Confirmation visuelle à la soumission
+        document.getElementById('devisForm').addEventListener('submit', function(e) {
+            document.getElementById('confirmationMessage').classList.remove('hidden');
+            // Petit délai pour montrer le message avant l'ouverture du mail
+            setTimeout(() => {
+                // Le formulaire se soumettra normalement via mailto
+            }, 500);
+        });
+    });
+</script>
+
+</body>
+</html>
