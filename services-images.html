@@ -9,9 +9,9 @@
   <meta name="description" content="10 activités sportives sur mesure à Clermont de l'Oise. Dès 40€/h. Réservez en 1 clic !">
   <title>Nos Activités Sportives | CoachPourVous</title>
 
-  <script src="https://cdn.tailwindcss.com "></script>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300 ;400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css ">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <style>
     /* Empêche le zoom automatique sur les champs */
@@ -64,6 +64,12 @@
         .floating { display: none; }
     }
   </style>
+<style>
+  .video-bg, .hero-overlay { pointer-events: none; }
+  .category-tab { cursor: pointer; }
+  .activity-card { transition: opacity .25s ease, transform .25s ease; }
+  .activity-card.hide { opacity: 0; transform: scale(.98); display: none !important; }
+</style>
 </head>
 <body class="bg-gray-50">
 
@@ -79,10 +85,10 @@
 
 <!-- HERO VIDEO -->
 <section class="relative min-h-screen flex flex-col justify-center items-center text-white px-4 overflow-hidden">
-    <video autoplay muted loop playsinline preload="metadata" poster="videos/cardio-poster.jpg" class="absolute inset-0 w-full h-full object-cover">
+    <video autoplay muted loop playsinline preload="metadata" poster="videos/cardio-poster.jpg" class="absolute inset-0 w-full h-full object-cover video-bg">
         <source src="videos/cardio.mp4" type="video/mp4">
     </video>
-    <div class="absolute inset-0 bg-gradient-to-b from-orange-400/60 to-yellow-300/30"></div>
+    <div class="absolute inset-0 bg-gradient-to-b from-orange-400/60 to-yellow-300/30 hero-overlay"></div>
     <div class="floating absolute top-20 left-10"><i class="fas fa-running text-6xl"></i></div>
     <div class="floating absolute top-40 right-16" style="animation-delay:1s;"><i class="fas fa-music text-5xl"></i></div>
     <div class="floating absolute bottom-40 left-20" style="animation-delay:2s;"><i class="fas fa-dumbbell text-4xl"></i></div>
@@ -100,10 +106,10 @@
 <section class="bg-white py-8 px-4 sticky top-0 z-40 shadow-sm">
     <div class="max-w-6xl mx-auto">
         <div class="flex flex-wrap justify-center gap-4">
-            <button type="button" class="category-tab active px-6 py-3 rounded-full font-semibold text-sm bg-orange-400 text-white" onclick="filterActivities('all')"><i class="fas fa-th-large mr-2"></i>Toutes</button>
-            <button type="button" class="category-tab px-6 py-3 rounded-full font-semibold text-sm bg-gray-100 text-gray-700" onclick="filterActivities('cardio')"><i class="fas fa-heartbeat mr-2"></i>Énergie & Cardio</button>
-            <button type="button" class="category-tab px-6 py-3 rounded-full font-semibold text-sm bg-gray-100 text-gray-700" onclick="filterActivities('muscle')"><i class="fas fa-dumbbell mr-2"></i>Tonus & Posture</button>
-            <button type="button" class="category-tab px-6 py-3 rounded-full font-semibold text-sm bg-gray-100 text-gray-700" onclick="filterActivities('fun')"><i class="fas fa-smile mr-2"></i>Loisirs Ludiques</button>
+            <button data-filter="all" type="button" class="category-tab active px-6 py-3 rounded-full font-semibold text-sm bg-orange-400 text-white"><i class="fas fa-th-large mr-2"></i>Toutes</button>
+            <button data-filter="cardio" type="button" class="category-tab px-6 py-3 rounded-full font-semibold text-sm bg-gray-100 text-gray-700"><i class="fas fa-heartbeat mr-2"></i>Énergie & Cardio</button>
+            <button data-filter="muscle" type="button" class="category-tab px-6 py-3 rounded-full font-semibold text-sm bg-gray-100 text-gray-700"><i class="fas fa-dumbbell mr-2"></i>Tonus & Posture</button>
+            <button data-filter="fun" type="button" class="category-tab px-6 py-3 rounded-full font-semibold text-sm bg-gray-100 text-gray-700"><i class="fas fa-smile mr-2"></i>Loisirs Ludiques</button>
         </div>
     </div>
 </section>
@@ -347,38 +353,60 @@
 <div class="h-20"></div>
 
 <script>
-    function toggleDetail(card){
-        const box=card.querySelector('.detail-box');
-        box.classList.toggle('open');
-        card.classList.toggle('open');
-        const isOpen = card.classList.contains('open');
-        card.setAttribute('aria-expanded', isOpen);
-    }
-    function filterActivities(category){
-        const tabs = document.querySelectorAll('.category-tab');
-        tabs.forEach(t => {
-            t.classList.remove('active', 'bg-orange-400', 'text-white');
-            t.classList.add('bg-gray-100', 'text-gray-700');
-        });
-        this.classList.remove('bg-gray-100', 'text-gray-700');
-        this.classList.add('active', 'bg-orange-400', 'text-white');
-        document.querySelectorAll('.activity-card').forEach(card=>{
-            const cat=card.getAttribute('data-category');
-            if(category==='all'||cat===category){card.style.display='block';setTimeout(()=>card.classList.add('show'),40);}
-            else{card.classList.remove('show');setTimeout(()=>card.style.display='none',300);}
-        });
-    }
-    // Accessibilité clavier
-    document.querySelectorAll('.activity-card').forEach(card => {
-        card.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                toggleDetail(card);
-            }
-        });
+(function(){
+  function setActive(tab){
+    document.querySelectorAll('.category-tab').forEach(b=>{
+      b.classList.remove('active','bg-orange-400','text-white');
+      b.classList.add('bg-gray-100','text-gray-700');
     });
-    document.addEventListener('DOMContentLoaded',()=>document.querySelectorAll('.activity-card').forEach((c,i)=>setTimeout(()=>c.classList.add('show'),i*100)));
+    tab.classList.add('active','bg-orange-400','text-white');
+    tab.classList.remove('bg-gray-100','text-gray-700');
+  }
+  function applyFilter(category){
+    const cards = document.querySelectorAll('.activity-card');
+    cards.forEach(card=>{
+      const cat = card.getAttribute('data-category');
+      const show = (category==='all' || cat===category);
+      card.classList.toggle('hide', !show);
+      if(show){
+        card.style.display='block';
+        requestAnimationFrame(()=>card.classList.add('show'));
+      } else {
+        card.classList.remove('show');
+        setTimeout(()=>card.style.display='none',200);
+      }
+    });
+  }
+  function wireDetail(){
+    document.querySelectorAll('.activity-card').forEach(card => {
+      card.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          const box = card.querySelector('.detail-box');
+          box.classList.toggle('open');
+          card.classList.toggle('open');
+          card.setAttribute('aria-expanded', card.classList.contains('open'));
+        }
+      });
+    });
+  }
+  document.addEventListener('DOMContentLoaded', function(){
+    document.querySelectorAll('.category-tab').forEach(tab=>{
+      tab.addEventListener('click', function(){
+        const cat = tab.getAttribute('data-filter') || 'all';
+        setActive(tab);
+        applyFilter(cat);
+      });
+    });
+    const initial = document.querySelector('.category-tab.active') || document.querySelector('.category-tab');
+    if(initial){
+      setActive(initial);
+      applyFilter(initial.getAttribute('data-filter') || 'all');
+    }
+    document.querySelectorAll('.activity-card').forEach((c,i)=>setTimeout(()=>c.classList.add('show'), i*80));
+    wireDetail();
+  });
+})();
 </script>
-
 </body>
 </html>
