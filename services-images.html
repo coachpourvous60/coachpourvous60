@@ -19,31 +19,67 @@
     body { -webkit-text-size-adjust: 100%; font-family: 'Montserrat', sans-serif; }
     input, select, textarea { font-size: 16px !important; }
 
-    /* Cartes - détails déroulants */
+    /* === CORRECTIONS PRINCIPALES === */
+    .activity-card {
+      display: flex;
+      flex-direction: column;
+      transition: all .3s cubic-bezier(0.4, 0, 0.2, 1);
+      min-height: 420px; /* Hauteur minimale cohérente */
+    }
+    
+    .activity-card .p-6 {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+    }
+    
+    /* Conteneur description avec hauteur fixe */
+    .desc-container {
+      min-height: 60px;
+      display: flex;
+      align-items: flex-start;
+    }
+    
+    /* Prix collé en bas */
+    .price-tag {
+      margin-top: auto;
+      padding-top: 12px;
+    }
+
+    /* Détail box - correction du padding qui créait de l'espace */
     .detail-box {
       max-height: 0;
       overflow: hidden;
-      transition: max-height .4s ease-out, padding .4s ease-out;
-      padding-top: 0; padding-bottom: 0;
+      transition: max-height .4s cubic-bezier(0.4, 0, 0.2, 1);
+      padding: 0 1.5rem; /* padding horizontal uniquement */
+      margin: 0 -1.5rem; /* compensation pour s'aligner */
     }
+    
     .detail-box.open {
-      max-height: 250px;
-      padding-top: .5rem; padding-bottom: .5rem;
+      max-height: 200px;
+      padding: 0.75rem 1.5rem; /* padding vertical quand ouvert */
+      margin-top: 0.75rem;
+      margin-bottom: 0.75rem;
     }
+
     .activity-card.open .detail-trigger i {
       transform: rotate(180deg);
       transition: transform .3s ease;
     }
 
     /* Apparition cartes */
-    @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-    .activity-card { transition: opacity .25s ease, transform .25s ease; }
-    .activity-card.show { animation: fadeInUp .6s ease-out forwards; }
-    .activity-card.hide { display: none !important; opacity: 0; transform: scale(.98); }
-
+    @keyframes fadeInUp { 
+      from { opacity: 0; transform: translateY(20px); } 
+      to { opacity: 1; transform: translateY(0); } 
+    }
+    .activity-card.show { animation: fadeInUp .5s ease-out forwards; }
+    .activity-card.hide { display: none !important; }
+    
     /* Empêcher la vidéo/overlay de bloquer les clics */
     .video-bg, .hero-overlay { pointer-events: none !important; }
-
+    
     /* UX onglets */
     .category-tab { cursor: pointer; }
   </style>
@@ -85,14 +121,14 @@
   </div>
 </section>
 
-<!-- CATEGORY TABS (z-index renforcé) -->
+<!-- CATEGORY TABS -->
 <section class="bg-white py-8 px-4 sticky top-0 z-[9999] shadow-sm">
   <div class="max-w-6xl mx-auto">
     <div class="flex flex-wrap justify-center gap-4">
-      <button type="button" data-filter="all"    class="category-tab active px-6 py-3 rounded-full font-semibold text-sm bg-orange-400 text-white"><i class="fas fa-th-large mr-2"></i>Toutes</button>
+      <button type="button" data-filter="all" class="category-tab active px-6 py-3 rounded-full font-semibold text-sm bg-orange-400 text-white"><i class="fas fa-th-large mr-2"></i>Toutes</button>
       <button type="button" data-filter="cardio" class="category-tab px-6 py-3 rounded-full font-semibold text-sm bg-gray-100 text-gray-700"><i class="fas fa-heartbeat mr-2"></i>Énergie & Cardio</button>
       <button type="button" data-filter="muscle" class="category-tab px-6 py-3 rounded-full font-semibold text-sm bg-gray-100 text-gray-700"><i class="fas fa-dumbbell mr-2"></i>Tonus & Posture</button>
-      <button type="button" data-filter="fun"    class="category-tab px-6 py-3 rounded-full font-semibold text-sm bg-gray-100 text-gray-700"><i class="fas fa-smile mr-2"></i>Loisirs Ludiques</button>
+      <button type="button" data-filter="fun" class="category-tab px-6 py-3 rounded-full font-semibold text-sm bg-gray-100 text-gray-700"><i class="fas fa-smile mr-2"></i>Loisirs Ludiques</button>
     </div>
   </div>
 </section>
@@ -144,12 +180,16 @@
       <div class="activity-card card-hover bg-white rounded-2xl overflow-hidden shadow-lg" data-category="cardio" role="button" tabindex="0" aria-expanded="false" onclick="toggleDetail(this)">
         <div class="h-48 bg-cover bg-center relative overflow-hidden" style="background-image:url('images/zumba.jpg');" role="img" aria-label="Cours de Zumba en pleine action, participants souriants"><div class="absolute inset-0 bg-black/30"></div></div>
         <div class="p-6">
-          <h3 class="text-xl font-bold text-gray-800 mb-2">Zumba / Zumba Family</h3>
-          <p class="text-gray-600 mb-4">Danse festive et dynamique pour brûler des calories en famille ou entre amis</p>
-          <div class="text-lg font-bold text-gray-800 mb-2">50€/h</div>
-          <div class="detail-box px-6 pb-2"><p class="text-sm text-gray-700">Rythmes latins, chorégraphies simples, ambiance festive. Tous âges – aucun niveau requis.</p></div>
-          <div class="text-center mt-3">
-            <span class="detail-trigger inline-block w-8 h-8 bg-orange-100 rounded-full flex items-center justify-center mx-auto">
+          <h3 class="text-xl font-bold text-gray-800 mb-3">Zumba / Zumba Family</h3>
+          <div class="desc-container">
+            <p class="text-gray-600 text-sm leading-relaxed">Danse festive et dynamique pour brûler des calories en famille ou entre amis</p>
+          </div>
+          <div class="price-tag text-lg font-bold text-orange-600 mb-3">50€/h</div>
+          <div class="detail-box">
+            <p class="text-sm text-gray-700 leading-relaxed">Rythmes latins, chorégraphies simples, ambiance festive. Tous âges – aucun niveau requis.</p>
+          </div>
+          <div class="text-center mt-auto">
+            <span class="detail-trigger inline-block w-8 h-8 bg-orange-100 rounded-full flex items-center justify-center mx-auto cursor-pointer hover:bg-orange-200 transition-colors">
               <i class="fas fa-chevron-down text-orange-500 text-sm"></i>
             </span>
           </div>
@@ -160,12 +200,16 @@
       <div class="activity-card card-hover bg-white rounded-2xl overflow-hidden shadow-lg" data-category="cardio" role="button" tabindex="0" aria-expanded="false" onclick="toggleDetail(this)">
         <div class="h-48 bg-cover bg-center relative overflow-hidden" style="background-image:url('images/cardio.jpg');" role="img" aria-label="Séance de cardio fitness dynamique en extérieur"><div class="absolute inset-0 bg-black/30"></div></div>
         <div class="p-6">
-          <h3 class="text-xl font-bold text-gray-800 mb-2">Cardio Fitness</h3>
-          <p class="text-gray-600 mb-4">Intensif et musical pour améliorer endurance et forme globale</p>
-          <div class="text-lg font-bold text-gray-800 mb-2">50€/h</div>
-          <div class="detail-box px-6 pb-2"><p class="text-sm text-gray-700">Enchaînements cardio sur musique entraînante, squats, jacks, burpees…</p></div>
-          <div class="text-center mt-3">
-            <span class="detail-trigger inline-block w-8 h-8 bg-orange-100 rounded-full flex items-center justify-center mx-auto">
+          <h3 class="text-xl font-bold text-gray-800 mb-3">Cardio Fitness</h3>
+          <div class="desc-container">
+            <p class="text-gray-600 text-sm leading-relaxed">Intensif et musical pour améliorer endurance et forme globale</p>
+          </div>
+          <div class="price-tag text-lg font-bold text-orange-600 mb-3">50€/h</div>
+          <div class="detail-box">
+            <p class="text-sm text-gray-700 leading-relaxed">Enchaînements cardio sur musique entraînante, squats, jacks, burpees…</p>
+          </div>
+          <div class="text-center mt-auto">
+            <span class="detail-trigger inline-block w-8 h-8 bg-orange-100 rounded-full flex items-center justify-center mx-auto cursor-pointer hover:bg-orange-200 transition-colors">
               <i class="fas fa-chevron-down text-orange-500 text-sm"></i>
             </span>
           </div>
@@ -176,12 +220,16 @@
       <div class="activity-card card-hover bg-white rounded-2xl overflow-hidden shadow-lg" data-category="cardio" role="button" tabindex="0" aria-expanded="false" onclick="toggleDetail(this)">
         <div class="h-48 bg-cover bg-center relative overflow-hidden" style="background-image:url('images/capoeira.jpg');" role="img" aria-label="Cours de capoeira au coucher du soleil, ambiance conviviale"><div class="absolute inset-0 bg-black/30"></div></div>
         <div class="p-6">
-          <h3 class="text-xl font-bold text-gray-800 mb-2">Capoeira / Hip-Hop</h3>
-          <p class="text-gray-600 mb-4">Sessions urbaines et culturelles pour coordination et expression</p>
-          <div class="text-lg font-bold text-gray-800 mb-2">50€/h</div>
-          <div class="detail-box px-6 pb-2"><p class="text-sm text-gray-700">Apprenez bases capoeira ou chorés hip-hop. Accessible dès 8 ans.</p></div>
-          <div class="text-center mt-3">
-            <span class="detail-trigger inline-block w-8 h-8 bg-orange-100 rounded-full flex items-center justify-center mx-auto">
+          <h3 class="text-xl font-bold text-gray-800 mb-3">Capoeira / Hip-Hop</h3>
+          <div class="desc-container">
+            <p class="text-gray-600 text-sm leading-relaxed">Sessions urbaines et culturelles pour coordination et expression</p>
+          </div>
+          <div class="price-tag text-lg font-bold text-orange-600 mb-3">50€/h</div>
+          <div class="detail-box">
+            <p class="text-sm text-gray-700 leading-relaxed">Apprenez bases capoeira ou chorés hip-hop. Accessible dès 8 ans.</p>
+          </div>
+          <div class="text-center mt-auto">
+            <span class="detail-trigger inline-block w-8 h-8 bg-orange-100 rounded-full flex items-center justify-center mx-auto cursor-pointer hover:bg-orange-200 transition-colors">
               <i class="fas fa-chevron-down text-orange-500 text-sm"></i>
             </span>
           </div>
@@ -192,12 +240,16 @@
       <div class="activity-card card-hover bg-white rounded-2xl overflow-hidden shadow-lg" data-category="muscle" role="button" tabindex="0" aria-expanded="false" onclick="toggleDetail(this)">
         <div class="h-48 bg-cover bg-center relative overflow-hidden" style="background-image:url('images/renforcement.jpg');" role="img" aria-label="Renforcement musculaire avec élastiques en extérieur"><div class="absolute inset-0 bg-black/30"></div></div>
         <div class="p-6">
-          <h3 class="text-xl font-bold text-gray-800 mb-2">Renforcement Musculaire</h3>
-          <p class="text-gray-600 mb-4">Progression ciblée pour sculpter votre corps et améliorer votre endurance</p>
-          <div class="text-lg font-bold text-gray-800 mb-2">50€/h</div>
-          <div class="detail-box px-6 pb-2"><p class="text-sm text-gray-700">Travail au poids du corps ou avec petit matériel (élastiques, haltères).</p></div>
-          <div class="text-center mt-3">
-            <span class="detail-trigger inline-block w-8 h-8 bg-orange-100 rounded-full flex items-center justify-center mx-auto">
+          <h3 class="text-xl font-bold text-gray-800 mb-3">Renforcement Musculaire</h3>
+          <div class="desc-container">
+            <p class="text-gray-600 text-sm leading-relaxed">Progression ciblée pour sculpter votre corps et améliorer votre endurance</p>
+          </div>
+          <div class="price-tag text-lg font-bold text-orange-600 mb-3">50€/h</div>
+          <div class="detail-box">
+            <p class="text-sm text-gray-700 leading-relaxed">Travail au poids du corps ou avec petit matériel (élastiques, haltères).</p>
+          </div>
+          <div class="text-center mt-auto">
+            <span class="detail-trigger inline-block w-8 h-8 bg-orange-100 rounded-full flex items-center justify-center mx-auto cursor-pointer hover:bg-orange-200 transition-colors">
               <i class="fas fa-chevron-down text-orange-500 text-sm"></i>
             </span>
           </div>
@@ -208,12 +260,16 @@
       <div class="activity-card card-hover bg-white rounded-2xl overflow-hidden shadow-lg" data-category="muscle" role="button" tabindex="0" aria-expanded="false" onclick="toggleDetail(this)">
         <div class="h-48 bg-cover bg-center relative overflow-hidden" style="background-image:url('images/pilates.jpg');" role="img" aria-label="Séance de Pilates en plein air, posture et respiration"><div class="absolute inset-0 bg-black/30"></div></div>
         <div class="p-6">
-          <h3 class="text-xl font-bold text-gray-800 mb-2">Pilates / Stretching</h3>
-          <p class="text-gray-600 mb-4">Posture, souplesse et récupération</p>
-          <div class="text-lg font-bold text-gray-800 mb-2">50€/h</div>
-          <div class="detail-box px-6 pb-2"><p class="text-sm text-gray-700">Étirements progressifs, travail léger de stabilisation et respiration consciente.</p></div>
-          <div class="text-center mt-3">
-            <span class="detail-trigger inline-block w-8 h-8 bg-orange-100 rounded-full flex items-center justify-center mx-auto">
+          <h3 class="text-xl font-bold text-gray-800 mb-3">Pilates / Stretching</h3>
+          <div class="desc-container">
+            <p class="text-gray-600 text-sm leading-relaxed">Posture, souplesse et récupération</p>
+          </div>
+          <div class="price-tag text-lg font-bold text-orange-600 mb-3">50€/h</div>
+          <div class="detail-box">
+            <p class="text-sm text-gray-700 leading-relaxed">Étirements progressifs, travail léger de stabilisation et respiration consciente.</p>
+          </div>
+          <div class="text-center mt-auto">
+            <span class="detail-trigger inline-block w-8 h-8 bg-orange-100 rounded-full flex items-center justify-center mx-auto cursor-pointer hover:bg-orange-200 transition-colors">
               <i class="fas fa-chevron-down text-orange-500 text-sm"></i>
             </span>
           </div>
@@ -224,12 +280,16 @@
       <div class="activity-card card-hover bg-white rounded-2xl overflow-hidden shadow-lg" data-category="fun" role="button" tabindex="0" aria-expanded="false" onclick="toggleDetail(this)">
         <div class="h-48 bg-cover bg-center relative overflow-hidden" style="background-image:url('images/tirarc.jpg');" role="img" aria-label="Tir à l’arc en forêt, concentration et précision"><div class="absolute inset-0 bg-black/30"></div></div>
         <div class="p-6">
-          <h3 class="text-xl font-bold text-gray-800 mb-2">Tir à l’Arc</h3>
-          <p class="text-gray-600 mb-4">Concentration et précision en plein air</p>
-          <div class="text-lg font-bold text-gray-800 mb-2">50€/h</div>
-          <div class="detail-box px-6 pb-2"><p class="text-sm text-gray-700">Arcs adaptés, jeux de précision, parcours possible en forêt.</p></div>
-          <div class="text-center mt-3">
-            <span class="detail-trigger inline-block w-8 h-8 bg-orange-100 rounded-full flex items-center justify-center mx-auto">
+          <h3 class="text-xl font-bold text-gray-800 mb-3">Tir à l’Arc</h3>
+          <div class="desc-container">
+            <p class="text-gray-600 text-sm leading-relaxed">Concentration et précision en plein air</p>
+          </div>
+          <div class="price-tag text-lg font-bold text-orange-600 mb-3">50€/h</div>
+          <div class="detail-box">
+            <p class="text-sm text-gray-700 leading-relaxed">Arcs adaptés, jeux de précision, parcours possible en forêt.</p>
+          </div>
+          <div class="text-center mt-auto">
+            <span class="detail-trigger inline-block w-8 h-8 bg-orange-100 rounded-full flex items-center justify-center mx-auto cursor-pointer hover:bg-orange-200 transition-colors">
               <i class="fas fa-chevron-down text-orange-500 text-sm"></i>
             </span>
           </div>
@@ -240,19 +300,21 @@
       <div class="activity-card card-hover bg-white rounded-2xl overflow-hidden shadow-lg" data-category="fun" role="button" tabindex="0" aria-expanded="false" onclick="toggleDetail(this)">
         <div class="h-48 bg-cover bg-center relative overflow-hidden" style="background-image:url('images/teambuilding.jpg');" role="img" aria-label="Team building sportif, collaboration et bonne humeur"><div class="absolute inset-0 bg-black/30"></div></div>
         <div class="p-6">
-          <h3 class="text-xl font-bold text-gray-800 mb-2">Team Building</h3>
-          <p class="text-gray-600 mb-4">Activités collaboratives pour renforcer l'esprit d'équipe</p>
-          <div class="text-lg font-bold text-gray-800 mb-2">Sur devis</div>
-          <div class="detail-box px-6 pb-2">
+          <h3 class="text-xl font-bold text-gray-800 mb-3">Team Building</h3>
+          <div class="desc-container">
+            <p class="text-gray-600 text-sm leading-relaxed">Activités collaboratives pour renforcer l'esprit d'équipe</p>
+          </div>
+          <div class="price-tag text-lg font-bold text-orange-600 mb-3">Sur devis</div>
+          <div class="detail-box">
             <div class="text-sm text-gray-700">
-              <p><strong>Olympiades internes</strong>, défis sportifs, jeux de coopération.</p>
-              <p class="mt-2">Forfait demi-journée (3h) : <strong class="text-orange-600">350€</strong></p>
-              <p>Forfait journée (6h) : <strong class="text-orange-600">600€</strong></p>
+              <p class="leading-relaxed"><strong>Olympiades internes</strong>, défis sportifs, jeux de coopération.</p>
+              <p class="mt-2 leading-relaxed"><strong>Forfait demi-journée (3h) :</strong> <span class="text-orange-600 font-bold">350€</span></p>
+              <p class="leading-relaxed"><strong>Forfait journée (6h) :</strong> <span class="text-orange-600 font-bold">600€</span></p>
               <p class="text-xs text-gray-500 mt-2">Tarifs groupe, sur devis personnalisé</p>
             </div>
           </div>
-          <div class="text-center mt-3">
-            <span class="detail-trigger inline-block w-8 h-8 bg-orange-100 rounded-full flex items-center justify-center mx-auto">
+          <div class="text-center mt-auto">
+            <span class="detail-trigger inline-block w-8 h-8 bg-orange-100 rounded-full flex items-center justify-center mx-auto cursor-pointer hover:bg-orange-200 transition-colors">
               <i class="fas fa-chevron-down text-orange-500 text-sm"></i>
             </span>
           </div>
@@ -263,12 +325,16 @@
       <div class="activity-card card-hover bg-white rounded-2xl overflow-hidden shadow-lg" data-category="muscle" role="button" tabindex="0" aria-expanded="false" onclick="toggleDetail(this)">
         <div class="h-48 bg-cover bg-center relative overflow-hidden" style="background-image:url('images/coaching-perso.jpg');" role="img" aria-label="Coach en plein coaching personnalisé, suivi individualisé"><div class="absolute inset-0 bg-black/30"></div></div>
         <div class="p-6">
-          <h3 class="text-xl font-bold text-gray-800 mb-2">Coaching Personnalisé</h3>
-          <p class="text-gray-600 mb-4">Objectif : perte de poids, remise en forme ou performance</p>
-          <div class="text-lg font-bold text-gray-800 mb-2">50€/h</div>
-          <div class="detail-box px-6 pb-2"><p class="text-sm text-gray-700">Bilan initial, programme sur-mesure, suivi nutrition basique, fiches entraînement. 1 h = 55 min, déplacements offerts.</p></div>
-          <div class="text-center mt-3">
-            <span class="detail-trigger inline-block w-8 h-8 bg-orange-100 rounded-full flex items-center justify-center mx-auto">
+          <h3 class="text-xl font-bold text-gray-800 mb-3">Coaching Personnalisé</h3>
+          <div class="desc-container">
+            <p class="text-gray-600 text-sm leading-relaxed">Objectif : perte de poids, remise en forme ou performance</p>
+          </div>
+          <div class="price-tag text-lg font-bold text-orange-600 mb-3">50€/h</div>
+          <div class="detail-box">
+            <p class="text-sm text-gray-700 leading-relaxed">Bilan initial, programme sur-mesure, suivi nutrition basique, fiches entraînement. 1 h = 55 min, déplacements offerts.</p>
+          </div>
+          <div class="text-center mt-auto">
+            <span class="detail-trigger inline-block w-8 h-8 bg-orange-100 rounded-full flex items-center justify-center mx-auto cursor-pointer hover:bg-orange-200 transition-colors">
               <i class="fas fa-chevron-down text-orange-500 text-sm"></i>
             </span>
           </div>
@@ -279,12 +345,16 @@
       <div class="activity-card card-hover bg-white rounded-2xl overflow-hidden shadow-lg" data-category="muscle" role="button" tabindex="0" aria-expanded="false" onclick="toggleDetail(this)">
         <div class="h-48 bg-cover bg-center relative overflow-hidden" style="background-image:url('images/gym-senior.jpg');" role="img" aria-label="Gym douce pour seniors, équilibre et souplesse"><div class="absolute inset-0 bg-black/30"></div></div>
         <div class="p-6">
-          <h3 class="text-xl font-bold text-gray-800 mb-2">Gym Senior</h3>
-          <p class="text-gray-600 mb-4">Entretien musculaire, équilibre et souplesse en douceur</p>
-          <div class="text-lg font-bold text-gray-800 mb-2">50€/h</div>
-          <div class="detail-box px-6 pb-2"><p class="text-sm text-gray-700">Renforcement des chaînes musculaires, prévention des chutes, mobilité articulaire, travail respiratoire. Matériel léger adapté.</p></div>
-          <div class="text-center mt-3">
-            <span class="detail-trigger inline-block w-8 h-8 bg-orange-100 rounded-full flex items-center justify-center mx-auto">
+          <h3 class="text-xl font-bold text-gray-800 mb-3">Gym Senior</h3>
+          <div class="desc-container">
+            <p class="text-gray-600 text-sm leading-relaxed">Entretien musculaire, équilibre et souplesse en douceur</p>
+          </div>
+          <div class="price-tag text-lg font-bold text-orange-600 mb-3">50€/h</div>
+          <div class="detail-box">
+            <p class="text-sm text-gray-700 leading-relaxed">Renforcement des chaînes musculaires, prévention des chutes, mobilité articulaire, travail respiratoire. Matériel léger adapté.</p>
+          </div>
+          <div class="text-center mt-auto">
+            <span class="detail-trigger inline-block w-8 h-8 bg-orange-100 rounded-full flex items-center justify-center mx-auto cursor-pointer hover:bg-orange-200 transition-colors">
               <i class="fas fa-chevron-down text-orange-500 text-sm"></i>
             </span>
           </div>
@@ -295,23 +365,25 @@
       <div class="activity-card card-hover bg-white rounded-2xl overflow-hidden shadow-lg" data-category="muscle" role="button" tabindex="0" aria-expanded="false" onclick="toggleDetail(this)">
         <div class="h-48 bg-cover bg-center relative overflow-hidden" style="background-image:url('images/visio.jpg');" role="img" aria-label="Cours de sport en visio depuis le salon, pratique et rapide"><div class="absolute inset-0 bg-black/30"></div></div>
         <div class="p-6">
-          <h3 class="text-xl font-bold text-gray-800 mb-2">Cours en Visio</h3>
-          <p class="text-gray-600 mb-4">Suivez vos séances depuis chez vous, partout en France</p>
-          <div class="text-lg font-bold text-gray-800 mb-2">40€/h</div>
-          <div class="detail-box px-6 pb-2">
+          <h3 class="text-xl font-bold text-gray-800 mb-3">Cours en Visio</h3>
+          <div class="desc-container">
+            <p class="text-gray-600 text-sm leading-relaxed">Suivez vos séances depuis chez vous, partout en France</p>
+          </div>
+          <div class="price-tag text-lg font-bold text-orange-600 mb-3">40€/h</div>
+          <div class="detail-box">
             <div class="text-sm text-gray-700">
-              <p><strong>Plateformes :</strong> Zoom, WhatsApp ou Google Meet</p>
-              <p class="mt-1">Matériel minimal : 2m², une chaise, une serviette</p>
-              <p class="mt-1">RDV possible <strong>7j/7</strong></p>
+              <p class="leading-relaxed"><strong>Plateformes :</strong> Zoom, WhatsApp ou Google Meet</p>
+              <p class="mt-1 leading-relaxed">Matériel minimal : 2m², une chaise, une serviette</p>
+              <p class="mt-1 leading-relaxed">RDV possible <strong>7j/7</strong></p>
               <div class="mt-3 border-t pt-3">
-                <p class="font-semibold">Formules dégressives :</p>
-                <p>5 séances : <strong class="text-orange-600">180€ (36€/h)</strong></p>
-                <p>10 séances : <strong class="text-orange-600">320€ (32€/h)</strong></p>
+                <p class="font-semibold mb-1">Formules dégressives :</p>
+                <p class="leading-relaxed">5 séances : <strong class="text-orange-600">180€ (36€/h)</strong></p>
+                <p class="leading-relaxed">10 séances : <strong class="text-orange-600">320€ (32€/h)</strong></p>
               </div>
             </div>
           </div>
-          <div class="text-center mt-3">
-            <span class="detail-trigger inline-block w-8 h-8 bg-orange-100 rounded-full flex items-center justify-center mx-auto">
+          <div class="text-center mt-auto">
+            <span class="detail-trigger inline-block w-8 h-8 bg-orange-100 rounded-full flex items-center justify-center mx-auto cursor-pointer hover:bg-orange-200 transition-colors">
               <i class="fas fa-chevron-down text-orange-500 text-sm"></i>
             </span>
           </div>
@@ -373,7 +445,7 @@
         const show = (category === 'all' || card.dataset.category === category);
         card.classList.toggle('hide', !show);
         if (show) {
-          card.style.display = 'block';
+          card.style.display = 'flex';
           requestAnimationFrame(() => card.classList.add('show'));
         } else {
           card.classList.remove('show');
