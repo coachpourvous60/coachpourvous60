@@ -8,7 +8,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="description" content="Contactez CoachPourVous à Clermont-de-l'Oise : 07 82 09 93 07 ou coachpourvous60@yahoo.com. Devis gratuit sous 24h. Séances à domicile ou en extérieur dans un rayon de 30km.">
   <title>Contact Coach Sportif Clermont-de-l'Oise | Devis Gratuit 24h | CoachPourVous</title>
-  
+
   <!-- OPEN GRAPH -->
   <meta property="og:title" content="CoachPourVous - Contact & Devis Gratuit 24h">
   <meta property="og:description" content="Coach sportif à Clermont-de-l'Oise. Séances à domicile, 30km autour. Devis rapide !">
@@ -31,7 +31,7 @@
 </head>
 <body class="bg-gray-50">
 
-<!-- NAVIGATION -->
+<!-- ✅ NAVIGATION BAS FIXE -->
 <nav class="fixed bottom-0 left-0 right-0 bg-white shadow-lg z-[99999] border-t-2 border-orange-200">
     <div class="flex justify-around items-center py-2">
         <a href="index.html" class="flex flex-col items-center p-2 text-gray-500 hover:text-orange-500"><i class="fas fa-home text-xl mb-1"></i><span class="text-xs font-medium">Accueil</span></a>
@@ -41,7 +41,7 @@
     </div>
 </nav>
 
-<!-- HERO -->
+<!-- ✅ HERO -->
 <section class="bg-gradient-to-br from-orange-400 to-yellow-400 text-white py-20 px-4 relative overflow-hidden">
     <div class="absolute inset-0 opacity-20 pointer-events-none">
         <div class="floating absolute top-20 left-10"><i class="fas fa-phone text-6xl"></i></div>
@@ -73,7 +73,7 @@
             </div>
         </div>
 
-        <!-- CGV / Mentions légales -->
+        <!-- ✅ CGV & Mentions légales -->
         <div class="mt-6 flex justify-center">
             <a href="cgv-mentions.html" class="inline-flex items-center gap-2 text-orange-600 font-semibold hover:text-orange-700">
                 <i class="fas fa-file-contract"></i> CGV & Mentions légales
@@ -82,11 +82,10 @@
     </div>
 </section>
 
-
-<!-- SECTION CONTACT + SNAPCHAT -->
+<!-- ✅ CONTACT + SNAPCHAT -->
 <section class="bg-white py-16 px-4">
     <div class="max-w-5xl mx-auto grid md:grid-cols-2 gap-12">
-        
+
         <!-- COL GAUCHE -->
         <div class="space-y-6 text-center">
             <div class="text-6xl mb-6 text-orange-400"><i class="fas fa-play-circle"></i></div>
@@ -111,27 +110,31 @@
             <h3 class="text-2xl font-bold mb-3 text-gray-800">On reste connectés ?</h3>
             <p class="text-gray-600 mb-6">Scanne mon Snapcode 👇</p>
             <a href="https://www.snapchat.com/add/bboyducky60" target="_blank">
-                <img src="images/Snapchat-35186673.jpg" class="mx-auto w-48 h-48 object-contain hover:scale-105 transition shadow-xl rounded-xl">
+                <img src="images/Snapchat-35186673.jpg" alt="Snapcode Coach Pour Vous"
+                     class="mx-auto w-48 h-48 object-contain hover:scale-105 transition shadow-xl rounded-xl">
             </a>
         </div>
     </div>
 </section>
 
-
-<!-- ✅ WHATSAPP FIXED BUTTON / TEXTE CENTRÉ -->
+<!-- ✅ WHATSAPP BOUTON FIXE AVEC TEXTE CENTRÉ -->
 <a href="https://wa.me/33782099307?text=Bonjour%20!%20Je%20veux%20réserver%20une%20séance%20de%20sport%20😊"
    target="_blank"
+   aria-label="Contact WhatsApp"
    class="fixed bottom-24 right-5 bg-green-500 hover:bg-green-600 text-white p-4 rounded-full shadow-lg transition z-[99999] group">
 
     <i class="fab fa-whatsapp text-2xl"></i>
 
-    <span class="absolute bottom-full mb-3 left-1/2 -translate-x-1/2
+    <!-- ✅ TEXTE CENTRÉ CORRECTEMENT -->
+    <span class="absolute bottom-full mb-3 left-1/2 transform -translate-x-1/2
                  bg-white text-gray-800 text-xs px-3 py-1 rounded shadow-md
-                 opacity-0 group-hover:opacity-100 transition whitespace-nowrap">
+                 opacity-0 group-hover:opacity-100 transition-all duration-300
+                 whitespace-nowrap text-center">
         Réponse rapide sur WhatsApp 💬
     </span>
 </a>
 
+<!-- ESPACE POUR LA NAVIGATION -->
 <div class="h-20"></div>
 
 </body>
